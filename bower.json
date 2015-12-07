@@ -1,0 +1,19 @@
+{
+  "name": "folkrobot",
+  "description": "",
+  "main": "index.coffee",
+  "authors": [
+    "Mats Rörbecker <mats@rorbecker.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/matsrorbecker/folkrobot",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/js/lib",
+    "test",
+    "tests"
+  ]
+}
