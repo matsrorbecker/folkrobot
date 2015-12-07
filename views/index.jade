@@ -1,6 +1,7 @@
 doctype html
-html
+html(lang='sv')
   head
+    meta(charset='utf-8')
     title ---=== EN LITEN ROBOT ===---
     link(rel='stylesheet' href='style.css')
   body
@@ -25,12 +26,12 @@ html
               h1 #{startOfHeadline} invånare i #{municipality}
             if change > 0
               p #{municipality} är en av de #{winners} kommuner i landet där invånarantalet växte i fjol#{optionalWords}. 
-              p.  
+              p.
                 Vid årsskiftet hade kommunen #{formatThousands(total)} invånare, en ökning med #{formatThousands(change)} personer eller 
                 #{formatPercentage(changeInPercent)} procent, enligt Statistiska centralbyrån (SCB).
             else if change < 0
               p #{municipality} är en av de #{losers} kommuner i landet där invånarantalet krympte i fjol#{optionalWords}. 
-              p.  
+              p.
                 Vid årsskiftet hade kommunen #{formatThousands(total)} invånare, en minskning med #{formatThousands(change)} personer eller 
                 #{formatPercentage(changeInPercent)} procent, enligt Statistiska centralbyrån (SCB).
             else
