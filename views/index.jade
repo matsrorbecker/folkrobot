@@ -8,11 +8,9 @@ html(lang='sv')
     div(id='container')
       form(action='/' method='post')
         p Jag vill läsa om befolkningsutvecklingen i: 
-          input(type='text' name='municipality' size='12')
+          input(type='text' name='municipality' id='municipality' value='Ange en kommun' size='12')
           input(type='submit' value='Skriv text')
-        if !municipality
-          p Ange en kommun ovan.
-        else
+        if municipality
           if validChoice
             - var optionalWords = ''
             if changeInPercent == largestIncrease
@@ -51,4 +49,6 @@ html(lang='sv')
               förra året.
           else
             p Det finns ingen kommun som heter #{municipality}.
-          
+    
+    script(src='js/lib/jquery/dist/jquery.min.js')
+    script(src='js/scripts.js')
