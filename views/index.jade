@@ -15,6 +15,7 @@ html(lang='sv')
       if municipality
         if validChoice
           - var optionalWords = ''
+          - var source = 'Statistiska centralbyrån (SCB)'
           if changeInPercent == largestIncrease
             - optionalWords = ' – och mätt i procent var ökningen den största i landet'
             h1 Störst folkökning i #{municipality}
@@ -24,34 +25,31 @@ html(lang='sv')
           else
             - var startOfHeadline = capitalizeFirstLetter(getAdjective(change))
             h1 #{startOfHeadline} invånare i #{municipality}
-          if change > 0
+          if change != 0
+            if change > 0
+              p.
+                #{municipality} är en av de #{winners} kommuner i landet där invånarantalet växte 
+                i fjol#{optionalWords}.
+            else
+              p.
+                #{municipality} är en av de #{losers} kommuner i landet där invånarantalet krympte 
+                i fjol#{optionalWords}.
             p.
-              #{municipality} är en av de #{winners} kommuner i landet där invånarantalet växte 
-              i fjol#{optionalWords}.
-            p.
-              Vid årsskiftet hade kommunen #{getNumberString(total)} invånare, en ökning med 
-              #{getNumberString(change)} personer eller #{formatPercentage(changeInPercent)} 
-              procent, enligt Statistiska centralbyrån (SCB).
-          else if change < 0
-            p.
-              #{municipality} är en av de #{losers} kommuner i landet där invånarantalet krympte 
-              i fjol#{optionalWords}.
-            p.
-              Vid årsskiftet hade kommunen #{getNumberString(total)} invånare, en minskning med 
-              #{getNumberString(change)} personer eller #{formatPercentage(changeInPercent)} 
-              procent, enligt Statistiska centralbyrån (SCB).
+              Vid årsskiftet hade kommunen #{getNumberString(total)} invånare, en #{getNoun(change)} 
+              med #{getNumberString(change)} personer eller #{formatPercentage(changeInPercent)} 
+              procent, enligt #{source}.
           else
             if 290 - winners - losers == 1
               p.
                 #{municipality} är den enda kommunen i landet där invånarantalet var oförändrat 
-                i fjol. Vid årsskiftet var antalet invånare #{getNumberString(total)} personer, 
-                precis som ett år tidigare, enligt Statistiska centralbyrån (SCB).
+                i fjol.
             else
               p.
                 #{municipality} är en av #{getNumberString(290 - winners - losers)} kommuner där 
-                invånarantalet var oförändrat i fjol. Vid årsskiftet var antalet invånare 
-                #{getNumberString(total)} personer, precis som ett år tidigare, enligt 
-                Statistiska centralbyrån (SCB).
+                invånarantalet var oförändrat i fjol.
+            p.
+              Vid årsskiftet var antalet invånare #{getNumberString(total)} personer, precis som 
+              ett år tidigare, enligt #{source}.
           p.
             Antalet kvinnor #{getVerb(womenChange)} med #{getNumberString(womenChange)} personer 
             eller #{formatPercentage(womenChangeInPercent)} procent, medan männen 
