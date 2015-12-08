@@ -8,9 +8,9 @@ html(lang='sv')
   body
     div(id='container')
       form(action='/' method='post')
-        p Jag vill läsa om befolkningsutvecklingen i: 
-          input(type='text' name='municipality' id='municipality' value='Ange en kommun' size='12')
-          input(type='submit' value='Skriv text')
+        label(for='municipality') Jag vill läsa om befolkningsutvecklingen i: 
+        input(type='text' name='municipality' id='municipality' value='Ange en kommun' size='12')
+        input(type='submit' value='Skriv text')
         if municipality
           if validChoice
             - var optionalWords = ''
@@ -24,30 +24,41 @@ html(lang='sv')
               - var startOfHeadline = capitalizeFirstLetter(getAdjective(change))
               h1 #{startOfHeadline} invånare i #{municipality}
             if change > 0
-              p #{municipality} är en av de #{winners} kommuner i landet där invånarantalet växte i fjol#{optionalWords}. 
               p.
-                Vid årsskiftet hade kommunen #{formatThousands(total)} invånare, en ökning med #{formatThousands(change)} personer eller 
-                #{formatPercentage(changeInPercent)} procent, enligt Statistiska centralbyrån (SCB).
+                #{municipality} är en av de #{winners} kommuner i landet där invånarantalet växte 
+                i fjol#{optionalWords}.
+              p.
+                Vid årsskiftet hade kommunen #{formatThousands(total)} invånare, en ökning med 
+                #{formatThousands(change)} personer eller #{formatPercentage(changeInPercent)} 
+                procent, enligt Statistiska centralbyrån (SCB).
             else if change < 0
-              p #{municipality} är en av de #{losers} kommuner i landet där invånarantalet krympte i fjol#{optionalWords}. 
               p.
-                Vid årsskiftet hade kommunen #{formatThousands(total)} invånare, en minskning med #{formatThousands(change)} personer eller 
-                #{formatPercentage(changeInPercent)} procent, enligt Statistiska centralbyrån (SCB).
+                #{municipality} är en av de #{losers} kommuner i landet där invånarantalet krympte 
+                i fjol#{optionalWords}.
+              p.
+                Vid årsskiftet hade kommunen #{formatThousands(total)} invånare, en minskning med 
+                #{formatThousands(change)} personer eller #{formatPercentage(changeInPercent)} 
+                procent, enligt Statistiska centralbyrån (SCB).
             else
               if 290 - winners - losers == 1
                 p.
-                  #{municipality} är den enda kommunen i landet där invånarantalet var oförändrat i fjol. Vid årsskiftet var antalet invånare
-                  #{formatThousands(total)} personer, precis som ett år tidigare, enligt Statistiska centralbyrån (SCB).
+                  #{municipality} är den enda kommunen i landet där invånarantalet var oförändrat 
+                  i fjol. Vid årsskiftet var antalet invånare #{formatThousands(total)} personer, 
+                  precis som ett år tidigare, enligt Statistiska centralbyrån (SCB).
               else
                 p.
-                  #{municipality} är en av #{getNumberString(290 - winners - losers)} kommuner där invånarantalet var oförändrat i fjol. Vid årsskiftet
-                  var antalet invånare #{formatThousands(total)} personer, precis som ett år tidigare, enligt Statistiska centralbyrån (SCB).
+                  #{municipality} är en av #{getNumberString(290 - winners - losers)} kommuner där 
+                  invånarantalet var oförändrat i fjol. Vid årsskiftet var antalet invånare 
+                  #{formatThousands(total)} personer, precis som ett år tidigare, enligt 
+                  Statistiska centralbyrån (SCB).
             p.
-              Antalet kvinnor #{getVerb(womenChange)} med #{formatThousands(womenChange)} personer eller #{formatPercentage(womenChangeInPercent)}
-              procent, medan männen #{getVerb(menChange)} med #{formatThousands(menChange)} personer eller #{formatPercentage(menChangeInPercent)} procent. 
+              Antalet kvinnor #{getVerb(womenChange)} med #{formatThousands(womenChange)} personer 
+              eller #{formatPercentage(womenChangeInPercent)} procent, medan männen 
+              #{getVerb(menChange)} med #{formatThousands(menChange)} personer eller 
+              #{formatPercentage(menChangeInPercent)} procent.
             p.
-              I genomsnitt #{getVerb(averageChange)} invånarantalet i landets kommuner med #{formatPercentage(averageChange)} procent
-              förra året.
+              I genomsnitt #{getVerb(averageChange)} invånarantalet i landets kommuner med 
+              #{formatPercentage(averageChange)} procent förra året.
           else
             p Det finns ingen kommun som heter #{municipality}.
     

@@ -24,11 +24,11 @@ h1, h2 {
   font-family: droid_sansbold, Arial, sans-serif;
 }
 
-p, a, .ui-autocomplete {
+p, a, label, .ui-autocomplete {
   font-family: droid_sansregular, Arial, sans-serif;
 }
 
-h1, h2, p, a, .ui-autocomplete {
+h1, h2, p, a, label, .ui-autocomplete {
   color: #333;
 }
 
@@ -41,6 +41,6 @@ form {
 }
 
 #container {  
-  width: 600px;
+  max-width: 640px;
   margin: auto;
 }
