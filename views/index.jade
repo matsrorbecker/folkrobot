@@ -2,65 +2,71 @@ doctype html
 html(lang='sv')
   head
     meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
     title ---=== EN LITEN ROBOT ===---
+    link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css' integrity='sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7' crossorigin='anonymous')
     link(rel='stylesheet' href='js/lib/jquery-ui/themes/smoothness/jquery-ui.min.css')
     link(rel='stylesheet' href='css/style.css')
   body
-    div(id='container')
-      form(action='/' method='post')
-        label(for='municipality') Jag vill läsa om befolkningsutvecklingen i: 
-        input(type='text' name='municipality' id='municipality' value='Ange en kommun' size='14')
-        input(type='submit' value='Skriv text')
-      
-      if municipality
-        if validChoice
-          - var optionalWords = ''
-          - var source = 'Statistiska centralbyrån (SCB)'
-          if changeInPercent == largestIncrease
-            - optionalWords = ' – och mätt i procent var ökningen den största i landet'
-            h1 Störst folkökning i #{municipality}
-          else if changeInPercent == largestDecrease
-            - optionalWords = ' – och mätt i procent var minskningen den största i landet'
-            h1 Störst folkminskning i #{municipality}
-          else
-            - var startOfHeadline = capitalizeFirstLetter(getAdjective(change))
-            h1 #{startOfHeadline} invånare i #{municipality}
-          if change != 0
-            if change > 0
+    .container
+      .row
+        .col-sm-3
+        .col-sm-6
+          form(action='/' method='post')
+            label(for='municipality') Jag vill läsa om befolkningsutvecklingen i:
+            input(type='text' name='municipality' id='municipality' value='Ange en kommun' size='15')
+            input(type='submit' value='Skriv text')
+          
+          if municipality
+            if validChoice
+              - var optionalWords = ''
+              - var source = 'Statistiska centralbyrån (SCB)'
+              if changeInPercent == largestIncrease
+                - optionalWords = ' – och mätt i procent var ökningen den största i landet'
+                h1 Störst folkökning i #{municipality}
+              else if changeInPercent == largestDecrease
+                - optionalWords = ' – och mätt i procent var minskningen den största i landet'
+                h1 Störst folkminskning i #{municipality}
+              else
+                - var startOfHeadline = capitalizeFirstLetter(getAdjective(change))
+                h1 #{startOfHeadline} invånare i #{municipality}
+              if change != 0
+                if change > 0
+                  p.
+                    #{municipality} är en av de #{winners} kommuner i landet där invånarantalet växte 
+                    i fjol#{optionalWords}.
+                else
+                  p.
+                    #{municipality} är en av de #{losers} kommuner i landet där invånarantalet krympte 
+                    i fjol#{optionalWords}.
+                p.
+                  Vid årsskiftet hade kommunen #{getNumberString(total)} invånare, en #{getNoun(change)} 
+                  med #{getNumberString(change)} personer eller #{formatPercentage(changeInPercent)} 
+                  procent, enligt #{source}.
+              else
+                if 290 - winners - losers == 1
+                  p.
+                    #{municipality} är den enda kommunen i landet där invånarantalet var oförändrat 
+                    i fjol.
+                else
+                  p.
+                    #{municipality} är en av #{getNumberString(290 - winners - losers)} kommuner där 
+                    invånarantalet var oförändrat i fjol.
+                p.
+                  Vid årsskiftet var antalet invånare #{getNumberString(total)} personer, precis som 
+                  ett år tidigare, enligt #{source}.
               p.
-                #{municipality} är en av de #{winners} kommuner i landet där invånarantalet växte 
-                i fjol#{optionalWords}.
+                Antalet kvinnor #{getVerb(womenChange)} med #{getNumberString(womenChange)} personer 
+                eller #{formatPercentage(womenChangeInPercent)} procent, medan männen 
+                #{getVerb(menChange)} med #{getNumberString(menChange)} personer eller 
+                #{formatPercentage(menChangeInPercent)} procent.
+              p.
+                I genomsnitt #{getVerb(averageChange)} invånarantalet i landets kommuner med 
+                #{formatPercentage(averageChange)} procent förra året.
             else
-              p.
-                #{municipality} är en av de #{losers} kommuner i landet där invånarantalet krympte 
-                i fjol#{optionalWords}.
-            p.
-              Vid årsskiftet hade kommunen #{getNumberString(total)} invånare, en #{getNoun(change)} 
-              med #{getNumberString(change)} personer eller #{formatPercentage(changeInPercent)} 
-              procent, enligt #{source}.
-          else
-            if 290 - winners - losers == 1
-              p.
-                #{municipality} är den enda kommunen i landet där invånarantalet var oförändrat 
-                i fjol.
-            else
-              p.
-                #{municipality} är en av #{getNumberString(290 - winners - losers)} kommuner där 
-                invånarantalet var oförändrat i fjol.
-            p.
-              Vid årsskiftet var antalet invånare #{getNumberString(total)} personer, precis som 
-              ett år tidigare, enligt #{source}.
-          p.
-            Antalet kvinnor #{getVerb(womenChange)} med #{getNumberString(womenChange)} personer 
-            eller #{formatPercentage(womenChangeInPercent)} procent, medan männen 
-            #{getVerb(menChange)} med #{getNumberString(menChange)} personer eller 
-            #{formatPercentage(menChangeInPercent)} procent.
-          p.
-            I genomsnitt #{getVerb(averageChange)} invånarantalet i landets kommuner med 
-            #{formatPercentage(averageChange)} procent förra året.
-        else
-          p Det finns ingen kommun som heter #{municipality}.
-    
+              p Det finns ingen kommun som heter #{municipality}.
+        .col-sm-3
+
     script(src='js/lib/jquery/dist/jquery.min.js')
     script(src='js/lib/jquery-ui//jquery-ui.min.js')
     script(src='js/scripts.js')
